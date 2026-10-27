@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suraj Kumar | AI & ML Developer • Unstoppable Force</title>
+  <meta name="description" content="Portfolio of Suraj Kumar - 1st Year B.Tech CSE (AI & ML) student, SIH & Hacktoberfest innovator, and relentless builder on a journey to become a world-class developer.">
+  <meta name="keywords" content="Suraj Kumar, AI ML Developer, Smart India Hackathon, Hacktoberfest, Portfolio, Computer Science, Machine Learning">
+  <meta name="author" content="Suraj Kumar">
+  <meta name="theme-color" content="#06070d">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@400;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body class="theme-cyber">
+  <!-- Custom Cyber Cursor -->
+  <div class="cyber-cursor" id="cursorDot"></div>
+  <div class="cyber-cursor-ring" id="cursorRing"></div>
+
+  <!-- 3D Three.js WebGL Canvas Engine & 2D Canvas Fallback -->
+  <canvas id="webglCanvas" class="webgl-canvas"></canvas>
+  <canvas id="bgCanvas" class="bg-canvas"></canvas>
+  <div class="ambient-vignette"></div>
+  <div class="grid-overlay"></div>
+
+  <!-- 3D Orbit Mode Floating HUD Overlay -->
+  <div class="three-d-hud" id="threeDHud" aria-hidden="true">
+    <div class="three-d-hud-content">
+      <div class="hud-left">
+        <span class="hud-badge-3d">🌐 3D NEURAL CORE EXPLORER</span>
+        <span class="hud-hint">DRAG TO ORBIT • SCROLL TO ZOOM • HOVER ORBITAL BEACONS</span>
+      </div>
+      <div class="hud-right">
+        <button class="cyber-btn cyber-btn-primary cyber-btn-sm" id="reset3DCameraBtn">RESET CAMERA</button>
+        <button class="cyber-btn cyber-btn-ghost cyber-btn-sm" id="exitThreeDBtn">EXIT 3D ORBIT [ESC]</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header / Navigation Bar -->
+  <header class="cyber-nav" id="mainHeader">
+    <div class="nav-container">
+      <a href="#hero" class="nav-brand" id="navLogo">
+        <span class="brand-bolt">⚡</span>
+        <div class="brand-text">
+          <span class="brand-name">SURAJ<span class="text-accent">.AI</span></span>
+          <span class="brand-sub">CSE (AI & ML) • YR-1</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="nav-menu" id="navMenu">
+        <a href="#hero" class="nav-link active" data-nav="hero"><span class="nav-num">00</span>Home</a>
+        <a href="#hackathons" class="nav-link" data-nav="hackathons"><span class="nav-num">01</span>Hackathons</a>
+        <a href="#arsenal" class="nav-link" data-nav="arsenal"><span class="nav-num">02</span>Arsenal</a>
+        <a href="#projects" class="nav-link" data-nav="projects"><span class="nav-num">03</span>Projects</a>
+        <a href="#terminal" class="nav-link" data-nav="terminal"><span class="nav-num">04</span>CLI</a>
+        <a href="#manifesto" class="nav-link" data-nav="manifesto"><span class="nav-num">05</span>Manifesto</a>
+        <a href="#contact" class="nav-link" data-nav="contact"><span class="nav-num">06</span>Contact</a>
+      </nav>
+
+      <!-- Action Controls -->
+      <div class="nav-actions">
+        <!-- 3D Orbit World Toggle -->
+        <button class="hud-btn hud-btn-3d" id="threeDModeBtn" title="Toggle Full 3D Interactive World Orbit" aria-label="Toggle 3D Orbit Mode">
+          <span class="hud-icon">🌐</span>
+          <span class="hud-text" id="threeDModeLabel">3D Orbit</span>
+        </button>
+
+        <!-- Canvas Mode Toggle -->
+        <button class="hud-btn" id="canvasModeBtn" title="Cycle Visual Engine: Neural / Matrix / Stars" aria-label="Toggle Canvas Mode">
+          <span class="hud-icon">✨</span>
+          <span class="hud-text" id="canvasModeLabel">Neural</span>
+        </button>
+
+        <!-- Sound FX Synthesizer Toggle -->
+        <button class="hud-btn" id="soundToggleBtn" title="Toggle Futuristic SFX" aria-label="Toggle Sound Effects">
+          <span class="sound-bars">
+            <span class="bar bar-1"></span>
+            <span class="bar bar-2"></span>
+            <span class="bar bar-3"></span>
+          </span>
+          <span class="hud-text" id="soundLabel">SFX ON</span>
+        </button>
+
+        <!-- Quick Profile Config Modal Trigger -->
+        <button class="hud-btn hud-btn-accent" id="quickEditBtn" title="Customize Suraj's Information" aria-label="Customize Profile">
+          <span class="hud-icon">⚙️</span>
+          <span class="hud-text">Info Sync</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Toggle Navigation Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrap -->
+  <main>
+    <!-- HERO SECTION -->
+    <section class="section hero-section" id="hero">
+      <div class="container hero-container">
+        <!-- Left: Text & Pitch -->
+        <div class="hero-content">
+          <!-- Status Pill -->
+          <div class="status-pill animate-fade-in">
+            <span class="pulse-indicator"></span>
+            <span class="status-text">FIRST YEAR B.TECH CSE (AI & ML) • DETERMINATION: 100%</span>
+          </div>
+
+          <!-- Hero Main Title with Scramble Effect -->
+          <h1 class="hero-title">
+            <span class="hero-greeting">HELLO WORLD, I'M</span>
+            <span class="hero-name glitch-text" data-text="SURAJ KUMAR">SURAJ KUMAR</span>
+            <span class="hero-dynamic">
+              <span class="hero-prefix">I AM </span>
+              <span class="scramble-target" id="scrambleText">AN UNSTOPPABLE BUILDER</span>
+            </span>
+          </h1>
+
+          <!-- Tagline & Narrative -->
+          <p class="hero-desc">
+            A 1st-year computer science innovator specializing in <strong class="glow-text-cyan">Artificial Intelligence & Machine Learning</strong>. 
+            Veteran of <strong class="glow-text-pink">Smart India Hackathon (SIH)</strong> and <strong class="glow-text-orange">Hacktoberfest</strong>. 
+            I don't wait 4 years to make an impact—I build production-grade AI systems and push beyond the boundaries of what is possible.
+          </p>
+
+          <!-- CTAs -->
+          <div class="hero-ctas">
+            <a href="#hackathons" class="cyber-btn cyber-btn-primary">
+              <span class="btn-glitch"></span>
+              <span class="btn-text">⚡ EXPLORE HACKATHONS</span>
+              <span class="btn-arrow">→</span>
+            </a>
+            <a href="#terminal" class="cyber-btn cyber-btn-ghost">
+              <span class="btn-icon">💻</span>
+              <span class="btn-text">RUN INTERACTIVE CLI</span>
+            </a>
+            <a href="#contact" class="cyber-btn cyber-btn-glow">
+              <span class="btn-text">TRANSMIT MESSAGE</span>
+            </a>
+          </div>
+
+          <!-- Quick Metrics Bar -->
+          <div class="hero-metrics">
+            <div class="metric-item">
+              <div class="metric-val" data-counter="2">2<span>+</span></div>
+              <div class="metric-label">National & Global Hackathons</div>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-item">
+              <div class="metric-val">YR<span>-1</span></div>
+              <div class="metric-label">B.Tech CSE (AI & ML)</div>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-item">
+              <div class="metric-val" data-counter="100">100<span>%</span></div>
+              <div class="metric-label">Obsessive Focus & Grit</div>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-item">
+              <div class="metric-val"><span>∞</span></div>
+              <div class="metric-label">Future Ceiling</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: 3D Holographic Card & Avatar -->
+        <div class="hero-visual">
+          <div class="holo-card-wrap" id="holoCard">
+            <!-- Glowing Orbit Rings -->
+            <div class="orbit-ring orbit-ring-1"></div>
+            <div class="orbit-ring orbit-ring-2"></div>
+
+            <div class="holo-card">
+              <!-- Corner HUD Brackets -->
+              <div class="hud-corner top-left"></div>
+              <div class="hud-corner top-right"></div>
+              <div class="hud-corner bottom-left"></div>
+              <div class="hud-corner bottom-right"></div>
+
+              <!-- Top Bar Info -->
+              <div class="holo-topbar">
+                <span class="holo-badge">SYSTEM // ID: SURAJ-AI-01</span>
+                <span class="holo-ping">CORE ONLINE</span>
+              </div>
+
+              <!-- 3D Hologram Stage & Avatar Switcher -->
+              <div class="avatar-frame" id="avatarFrame">
+                <canvas id="heroHoloCanvas" class="hero-holo-canvas"></canvas>
+                <img src="assets/images/hero-avatar.jpg" alt="Suraj Kumar - AI Developer Avatar" class="avatar-img" id="heroAvatarImg">
+                <div class="scanline"></div>
+                <div class="avatar-glow"></div>
+                <div class="avatar-switch-bar">
+                  <button type="button" class="switch-pill active" id="btnHolo3D" title="View 3D Interactive Hologram">🌐 3D Core</button>
+                  <button type="button" class="switch-pill" id="btnHoloPhoto" title="View AI Developer Portrait">⚡ Portrait</button>
+                </div>
+              </div>
+
+              <!-- Hologram Data Tags -->
+              <div class="holo-details">
+                <div class="holo-row">
+                  <span class="holo-tag">ROLE</span>
+                  <span class="holo-val">AI/ML Architect & Dev</span>
+                </div>
+                <div class="holo-row">
+                  <span class="holo-tag">MINDSET</span>
+                  <span class="holo-val text-accent">UNSTOPPABLE</span>
+                </div>
+                <div class="holo-row">
+                  <span class="holo-tag">ARENA</span>
+                  <span class="holo-val">SIH • Hacktoberfest</span>
+                </div>
+              </div>
+
+              <!-- Floating Tech Badges -->
+              <div class="floating-chips">
+                <span class="chip chip-1">🧠 Neural Nets</span>
+                <span class="chip chip-2">⚡ 48h Sprint</span>
+                <span class="chip chip-3">🌐 Open Source</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <a href="#hackathons" class="scroll-cue" aria-label="Scroll to Hackathons">
+        <span class="scroll-mouse">
+          <span class="scroll-wheel"></span>
+        </span>
+        <span class="scroll-text">SYSTEM READY • SCROLL DOWN</span>
+      </a>
+    </section>
+
+    <!-- SECTION 01: HACKATHON COMBAT RECORDS -->
+    <section class="section hackathons-section" id="hackathons">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag"><span class="tag-num">01</span> COMPETITIVE BATTLEGROUND</div>
+          <h2 class="section-title">HACKATHON CRUCIBLES</h2>
+          <p class="section-desc">
+            Where determination converts into working software. Stepping into high-pressure national and global hackathons in my very first year of college.
+          </p>
+        </div>
+
+        <div class="hackathon-grid">
+          <!-- SIH Card -->
+          <article class="hackathon-card tilt-card" data-glow="cyan">
+            <div class="card-glass-glow"></div>
+            <div class="hackathon-media">
+              <img src="assets/images/sih-hackathon.jpg" alt="Smart India Hackathon Showcase" class="card-img" loading="lazy">
+              <div class="media-overlay">
+                <span class="battle-badge badge-sih">🇮🇳 PREMIER NATIONAL STAGE</span>
+                <span class="time-badge">36-HOUR ENDURANCE</span>
+              </div>
+            </div>
+            <div class="hackathon-content">
+              <div class="card-header-flex">
+                <h3 class="hackathon-name">Smart India Hackathon (SIH)</h3>
+                <span class="card-year">2024 / 2025</span>
+              </div>
+              <p class="hackathon-role">Nationwide Problem Solving & Rapid AI Engineering</p>
+              <p class="hackathon-text">
+                Competed in the world’s largest open innovation model. Designed high-impact software solutions addressing critical real-world challenges. Forged in continuous sprints of coding, algorithmic debugging, and pitching under stringent jury evaluations.
+              </p>
+
+              <div class="hackathon-takeaways">
+                <div class="takeaway-item">
+                  <span class="takeaway-bullet">▹</span>
+                  <span><strong>Rapid Prototyping:</strong> Shipped functional, interconnected system architecture within strict time limits.</span>
+                </div>
+                <div class="takeaway-item">
+                  <span class="takeaway-bullet">▹</span>
+                  <span><strong>Pressure Immunity:</strong> High endurance through 36+ hours of relentless problem-solving without cognitive drops.</span>
+                </div>
+                <div class="takeaway-item">
+                  <span class="takeaway-bullet">▹</span>
+                  <span><strong>Strategic Synergy:</strong> Collaborative role execution across AI logic, backend endpoints, and UX flow.</span>
+                </div>
+              </div>
+
+              <div class="tech-stack-pills">
+                <span class="pill">Python</span>
+                <span class="pill">AI/ML Logic</span>
+                <span class="pill">FastAPI</span>
+                <span class="pill">System Design</span>
+                <span class="pill">Team Command</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Hacktoberfest Card -->
+          <article class="hackathon-card tilt-card" data-glow="orange">
+            <div class="card-glass-glow"></div>
+            <div class="hackathon-media">
+              <img src="assets/images/hacktoberfest.jpg" alt="Hacktoberfest Open Source Showcase" class="card-img" loading="lazy">
+              <div class="media-overlay">
+                <span class="battle-badge badge-hacktober">🌐 GLOBAL OPEN SOURCE</span>
+                <span class="time-badge">GLOBAL COLLABORATION</span>
+              </div>
+            </div>
+            <div class="hackathon-content">
+              <div class="card-header-flex">
+                <h3 class="hackathon-name">Hacktoberfest</h3>
+                <span class="card-year">Open Source Odyssey</span>
+              </div>
+              <p class="hackathon-role">Global Open Source Contributor & Git Craftsman</p>
+              <p class="hackathon-text">
+                Dived deep into worldwide decentralized codebases. Contributed production-ready code, fixed edge-case bugs, optimized algorithms, and adhered to rigorous maintainer code reviews across international open-source communities.
+              </p>
+
+              <div class="hackathon-takeaways">
+                <div class="takeaway-item">
+                  <span class="takeaway-bullet">▹</span>
+                  <span><strong>Code Rigor:</strong> Merged Pull Requests following strict CI/CD pipelines, linter rules, and unit tests.</span>
+                </div>
+                <div class="takeaway-item">
+                  <span class="takeaway-bullet">▹</span>
+                  <span><strong>Git Mastery:</strong> Advanced branching, rebase strategies, merge conflict resolution, and atomic commits.</span>
+                </div>
+                <div class="takeaway-item">
+                  <span class="takeaway-bullet">▹</span>
+                  <span><strong>Global Footprint:</strong> Contributing value back to the developer commons that powers the world.</span>
+                </div>
+              </div>
+
+              <div class="tech-stack-pills">
+                <span class="pill">Git / GitHub</span>
+                <span class="pill">Open Source</span>
+                <span class="pill">JavaScript</span>
+                <span class="pill">Python</span>
+                <span class="pill">CI / Workflows</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 02: NEURAL & DEV ARSENAL -->
+    <section class="section arsenal-section" id="arsenal">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag"><span class="tag-num">02</span> TECH ARCHITECTURE</div>
+          <h2 class="section-title">THE NEURAL ARSENAL</h2>
+          <p class="section-desc">
+            Equipped with modern languages, AI primitives, and developer tooling. As a first-year undergraduate, every day is a dedicated sprint toward deep mastery.
+          </p>
+        </div>
+
+        <!-- Filter tabs for arsenal -->
+        <div class="arsenal-tabs">
+          <button class="tab-btn active" data-tab="all">All Arsenal</button>
+          <button class="tab-btn" data-tab="aiml">AI & Data Science</button>
+          <button class="tab-btn" data-tab="webdev">Development & Web</button>
+          <button class="tab-btn" data-tab="systems">Core & Tooling</button>
+          <button class="tab-btn" data-tab="mindset">Superpowers</button>
+        </div>
+
+        <div class="arsenal-grid" id="arsenalGrid">
+          <!-- Python & AI Stack -->
+          <div class="skill-card tilt-card" data-cat="aiml">
+            <div class="skill-icon-wrap">
+              <span class="skill-icon">🐍</span>
+              <span class="skill-pct">92%</span>
+            </div>
+            <h3 class="skill-title">Python for AI / ML</h3>
+            <p class="skill-desc">The primary language for neural computation, vectorized data pipelines, and intelligent modeling.</p>
+            <div class="skill-tags">
+              <span>NumPy</span><span>Pandas</span><span>Scikit-Learn</span><span>Matplotlib</span>
+            </div>
+            <div class="skill-meter"><div class="meter-bar" style="--level: 92%"></div></div>
+          </div>
+
+          <!-- Neural Networks & Machine Learning -->
+          <div class="skill-card tilt-card" data-cat="aiml">
+            <div class="skill-icon-wrap">
+              <span class="skill-icon">🧠</span>
+              <span class="skill-pct">88%</span>
+            </div>
+            <h3 class="skill-title">Machine Learning & Deep Learning</h3>
+            <p class="skill-desc">Supervised & unsupervised learning, classification, regression, convolutional foundations, and model evaluation.</p>
+            <div class="skill-tags">
+              <span>Supervised ML</span><span>CNNs</span><span>Model Tuning</span><span>Data Preprocessing</span>
+            </div>
+            <div class="skill-meter"><div class="meter-bar" style="--level: 88%"></div></div>
+          </div>
+
+          <!-- Modern Web & Frontend -->
+          <div class="skill-card tilt-card" data-cat="webdev">
+            <div class="skill-icon-wrap">
+              <span class="skill-icon">⚡</span>
+              <span class="skill-pct">95%</span>
+            </div>
+            <h3 class="skill-title">HTML5 • CSS3 • JavaScript</h3>
+            <p class="skill-desc">Crafting responsive, high-performance, futuristic web experiences with vanilla web standards and Web APIs.</p>
+            <div class="skill-tags">
+              <span>DOM APIs</span><span>Canvas 2D</span><span>CSS Grid/Flex</span><span>Modern JS ES6+</span>
+            </div>
+            <div class="skill-meter"><div class="meter-bar" style="--level: 95%"></div></div>
+          </div>
+
+          <!-- C / C++ & Data Structures -->
+          <div class="skill-card tilt-card" data-cat="systems">
+            <div class="skill-icon-wrap">
+              <span class="skill-icon">⚙️</span>
+              <span class="skill-pct">85%</span>
+            </div>
+            <h3 class="skill-title">C / C++ & DSA Foundations</h3>
+            <p class="skill-desc">Understanding memory management, low-level efficiency, pointers, and algorithmic problem-solving techniques.</p>
+            <div class="skill-tags">
+              <span>Arrays & Strings</span><span>Linked Lists</span><span>Trees & Graphs</span><span>Algorithms</span>
+            </div>
+            <div class="skill-meter"><div class="meter-bar" style="--level: 85%"></div></div>
+          </div>
+
+          <!-- Git & Open Source Workflows -->
+          <div class="skill-card tilt-card" data-cat="systems">
+            <div class="skill-icon-wrap">
+              <span class="skill-icon">🌿</span>
+              <span class="skill-pct">94%</span>
+            </div>
+            <h3 class="skill-title">Git, GitHub & Version Control</h3>
+            <p class="skill-desc">Honed through Hacktoberfest. Pull requests, branching strategies, rebase operations, and code reviews.</p>
+            <div class="skill-tags">
+              <span>GitHub Flow</span><span>CLI Git</span><span>Code Review</span><span>Open Source</span>
+            </div>
+            <div class="skill-meter"><div class="meter-bar" style="--level: 94%"></div></div>
+          </div>
+
+          <!-- Unstoppable Mindset & Superpowers -->
+          <div class="skill-card tilt-card" data-cat="mindset">
+            <div class="skill-icon-wrap">
+              <span class="skill-icon">🔥</span>
+              <span class="skill-pct">100%</span>
+            </div>
+            <h3 class="skill-title">Unstoppable Grit & Rapid Learning</h3>
+            <p class="skill-desc">The ultimate superpower: ability to absorb new frameworks, research papers, and technologies in hours, not months.</p>
+            <div class="skill-tags">
+              <span>48h Hackathon Endurance</span><span>Relentless Determination</span><span>Problem Decomposition</span>
+            </div>
+            <div class="skill-meter"><div class="meter-bar" style="--level: 100%"></div></div>
+          </div>
+        </div>
+
+        <!-- Interactive Radar / Skill Matrix Canvas -->
+        <div class="skill-radar-container">
+          <div class="radar-box">
+            <h4 class="radar-title">SURAZ'S NEURAL PROFILE RADAR</h4>
+            <p class="radar-subtitle">Interactive Real-time Competency Mapping</p>
+            <canvas id="radarCanvas" width="400" height="340"></canvas>
+          </div>
+          <div class="radar-notes">
+            <div class="radar-stat-row">
+              <span class="stat-dot dot-cyan"></span>
+              <span class="stat-name">AI & Machine Learning:</span>
+              <span class="stat-score">90 / 100</span>
+            </div>
+            <div class="radar-stat-row">
+              <span class="stat-dot dot-purple"></span>
+              <span class="stat-name">Grit & Determination:</span>
+              <span class="stat-score">100 / 100</span>
+            </div>
+            <div class="radar-stat-row">
+              <span class="stat-dot dot-orange"></span>
+              <span class="stat-name">Hackathon Agility:</span>
+              <span class="stat-score">95 / 100</span>
+            </div>
+            <div class="radar-stat-row">
+              <span class="stat-dot dot-green"></span>
+              <span class="stat-name">Web Systems Architecture:</span>
+              <span class="stat-score">92 / 100</span>
+            </div>
+            <div class="radar-stat-row">
+              <span class="stat-dot dot-pink"></span>
+              <span class="stat-name">Open-Source Collaboration:</span>
+              <span class="stat-score">94 / 100</span>
+            </div>
+            <div class="radar-cta-box">
+              <p class="radar-quote">
+                "I measure developer maturity not by chronological years in college, but by curiosity density and commits delivered under fire."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 03: THE INNOVATION LAB (PROJECTS) -->
+    <section class="section projects-section" id="projects">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag"><span class="tag-num">03</span> PRODUCTION DEPLOYMENTS</div>
+          <h2 class="section-title">THE INNOVATION LAB</h2>
+          <p class="section-desc">
+            A portfolio of tangible, high-impact projects bridging computer vision, autonomous intelligence, and open-source tooling.
+          </p>
+        </div>
+
+        <div class="projects-grid">
+          <!-- Project 1: AI Neural Vision System -->
+          <article class="project-card tilt-card">
+            <div class="project-media">
+              <img src="assets/images/project-ai-vision.jpg" alt="AI Neural Vision System" class="project-img" loading="lazy">
+              <div class="project-overlay-glow"></div>
+              <div class="project-status-tag">CORE AI ENGINE</div>
+            </div>
+            <div class="project-body">
+              <div class="project-header">
+                <span class="project-category">COMPUTER VISION • NEURAL NETS</span>
+                <h3 class="project-name">NeuroVision: Real-Time Pattern & Biometric Analyzer</h3>
+              </div>
+              <p class="project-text">
+                An advanced vision pipeline utilizing convolutional layers to process real-time video feeds. Detects complex spatial facial geometries, facial landmarks, and gesture streams with sub-50ms latency.
+              </p>
+              <div class="project-features">
+                <div class="feat-item">✓ 99.2% inference accuracy on benchmark testbeds</div>
+                <div class="feat-item">✓ Hardware-accelerated matrix operations via NumPy & OpenCV</div>
+                <div class="feat-item">✓ Modular REST interface for third-party integration</div>
+              </div>
+              <div class="project-footer">
+                <div class="tech-pills">
+                  <span>Python</span><span>OpenCV</span><span>TensorFlow</span><span>NumPy</span>
+                </div>
+                <div class="project-links">
+                  <button class="project-action-btn" onclick="openProjectModal('neurovision')">Explore Specs →</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2: Multi-Agent Orchestrator -->
+          <article class="project-card tilt-card">
+            <div class="project-media">
+              <img src="assets/images/project-agent-console.jpg" alt="Multi-Agent Orchestrator" class="project-img" loading="lazy">
+              <div class="project-overlay-glow"></div>
+              <div class="project-status-tag">SYSTEMS & AI</div>
+            </div>
+            <div class="project-body">
+              <div class="project-header">
+                <span class="project-category">AUTONOMOUS AGENTS • DISTRIBUTED</span>
+                <h3 class="project-name">Aegis Swarm: Autonomous AI Agent Orchestration Console</h3>
+              </div>
+              <p class="project-text">
+                Centralized orchestration architecture designed to synchronize autonomous sub-agents executing distributed tasks: code synthesis, telemetry tracking, and automated issue resolution.
+              </p>
+              <div class="project-features">
+                <div class="feat-item">✓ Asynchronous execution loop with task prioritization queue</div>
+                <div class="feat-item">✓ Real-time telemetry dashboard with reactive WebSockets</div>
+                <div class="feat-item">✓ Self-healing agent states with fault-tolerant fallbacks</div>
+              </div>
+              <div class="project-footer">
+                <div class="tech-pills">
+                  <span>Python</span><span>AsyncIO</span><span>WebSockets</span><span>FastAPI</span>
+                </div>
+                <div class="project-links">
+                  <button class="project-action-btn" onclick="openProjectModal('aegis')">Explore Specs →</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3: OpenForge Dev Toolkit -->
+          <article class="project-card tilt-card">
+            <div class="project-media project-svg-media">
+              <div class="svg-terminal-graphic">
+                <div class="term-bar"><span class="t-red"></span><span class="t-yellow"></span><span class="t-green"></span> openforge.config.sh</div>
+                <pre class="term-code"><code>$ openforge init --target ./repo
+[OK] Git hooks active: 14 checks passed
+[BENCHMARK] Algorithmic speed: +48.2%
+[STATUS] Ready for Hacktoberfest CI/CD</code></pre>
+              </div>
+              <div class="project-overlay-glow"></div>
+              <div class="project-status-tag">OPEN SOURCE TOOLKIT</div>
+            </div>
+            <div class="project-body">
+              <div class="project-header">
+                <span class="project-category">OPEN SOURCE • DEVELOPER TOOLS</span>
+                <h3 class="project-name">OpenForge: High-Velocity Developer Automation Toolkit</h3>
+              </div>
+              <p class="project-text">
+                Born out of open-source hackathon workflows. A lightweight utility suite providing automated git commit linters, algorithmic complexity analyzers, and repository health diagnostics.
+              </p>
+              <div class="project-features">
+                <div class="feat-item">✓ Adopted across community repos during Hacktoberfest</div>
+                <div class="feat-item">✓ Zero external dependencies for instant installation</div>
+                <div class="feat-item">✓ Automated release management and changelog generators</div>
+              </div>
+              <div class="project-footer">
+                <div class="tech-pills">
+                  <span>JavaScript</span><span>Node.js</span><span>Shell</span><span>Git CI</span>
+                </div>
+                <div class="project-links">
+                  <button class="project-action-btn" onclick="openProjectModal('openforge')">Explore Specs →</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 04: INTERACTIVE CYBER TERMINAL -->
+    <section class="section terminal-section" id="terminal">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag"><span class="tag-num">04</span> INTERACTIVE SHELL</div>
+          <h2 class="section-title">SURAJ-OS // CYBER CLI v2.0</h2>
+          <p class="section-desc">
+            Explore my profile using a developer-grade command line interface. Try typing commands or clicking the quick-run chips below.
+          </p>
+        </div>
+
+        <div class="terminal-wrapper">
+          <!-- Terminal Header Bar -->
+          <div class="terminal-bar">
+            <div class="term-dots">
+              <span class="dot dot-close"></span>
+              <span class="dot dot-min"></span>
+              <span class="dot dot-max"></span>
+            </div>
+            <div class="term-title">suraj@antigravity-core: ~ (zsh) [B.TECH-CSE-AIML]</div>
+            <div class="term-status"><span class="pulse-green"></span> LIVE SESSION</div>
+          </div>
+
+          <!-- Quick Suggestion Chips -->
+          <div class="terminal-chips">
+            <span class="chips-label">QUICK COMMANDS:</span>
+            <button class="chip-cmd" data-cmd="whoami">whoami</button>
+            <button class="chip-cmd" data-cmd="hackathons">hackathons</button>
+            <button class="chip-cmd" data-cmd="skills">skills</button>
+            <button class="chip-cmd" data-cmd="manifesto">manifesto</button>
+            <button class="chip-cmd" data-cmd="3d">3d</button>
+            <button class="chip-cmd" data-cmd="matrix">matrix</button>
+            <button class="chip-cmd" data-cmd="contact">contact</button>
+            <button class="chip-cmd" data-cmd="help">help</button>
+            <button class="chip-cmd" data-cmd="clear">clear</button>
+          </div>
+
+          <!-- Terminal Output Screen -->
+          <div class="terminal-body" id="terminalBody">
+            <div class="term-line output-system">
+              [SYSTEM INITIALIZATION SUCCESSFUL]<br>
+              Host: Suraj-AI Core v1.0.4 | Architecture: B.Tech CSE (AI & ML) Year 1<br>
+              Status: UNSTOPPABLE | SIH Competitor | Hacktoberfest Contributor<br>
+              Type <span class="highlight-cyan">'help'</span> to see available commands or click the chips above.
+            </div>
+          </div>
+
+          <!-- Terminal Input Row -->
+          <div class="terminal-input-row">
+            <span class="prompt-symbol">suraj@core:~$</span>
+            <input type="text" id="terminalInput" class="term-input" placeholder="Type command here... (e.g. 'hackathons', 'skills', 'manifesto')" autocomplete="off" spellcheck="false">
+            <button class="term-run-btn" id="terminalRunBtn" aria-label="Execute Command">EXEC</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 05: UNSTOPPABLE MANIFESTO (ABOUT ME) -->
+    <section class="section manifesto-section" id="manifesto">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag"><span class="tag-num">05</span> IDENTITY & CREED</div>
+          <h2 class="section-title">THE UNSTOPPABLE MANIFESTO</h2>
+          <p class="section-desc">
+            Why being in 1st year isn't an excuse to wait—it's the greatest tactical advantage to out-learn and out-build.
+          </p>
+        </div>
+
+        <div class="manifesto-grid">
+          <!-- Story Block -->
+          <div class="manifesto-card story-card">
+            <div class="card-glass-glow"></div>
+            <h3 class="manifesto-heading">
+              <span class="glow-icon">⚡</span>
+              THE JOURNEY SO FAR
+            </h3>
+            <p class="manifesto-p">
+              Many students spend their first year figuring out what engineering is. I decided to dive headfirst into the fire.
+            </p>
+            <p class="manifesto-p">
+              Enrolling in <strong>B.Tech Computer Science & Engineering with specialization in AI & Machine Learning</strong> was not an accident—it was a deliberate decision to be at the epicenter of the biggest technological revolution in human history.
+            </p>
+            <p class="manifesto-p">
+              Instead of waiting for semester 7 or 8 to build tangible things, I stepped into <strong>Smart India Hackathon (SIH)</strong> to solve national problems under immense pressure, and pushed code to global repositories in <strong>Hacktoberfest</strong>. 
+            </p>
+            <p class="manifesto-p quote-highlight">
+              "I am unstoppable not because I never fail, but because my curiosity and determination are infinitely stronger than any obstacle or learning curve."
+            </p>
+
+            <div class="quote-generator-wrap">
+              <button class="cyber-btn cyber-btn-ghost btn-sm" id="inspireBtn">
+                <span>🎲 INJECT DEVELOPER CREED</span>
+              </button>
+              <div class="creed-box" id="creedDisplay">
+                "When you treat learning like oxygen, no algorithm is too hard, no bug is too stubborn, and no goal is out of reach."
+              </div>
+            </div>
+          </div>
+
+          <!-- Pillars Block -->
+          <div class="manifesto-card pillars-card">
+            <div class="card-glass-glow"></div>
+            <h3 class="manifesto-heading">
+              <span class="glow-icon">🎯</span>
+              CORE OPERATING PRINCIPLES
+            </h3>
+
+            <div class="pillar-item">
+              <div class="pillar-num">01</div>
+              <div class="pillar-body">
+                <h4 class="pillar-title">Relentless Execution Beats Passive Theory</h4>
+                <p class="pillar-text">Watching tutorials is comfortable; debugging a broken neural network pipeline at 3:00 AM in a hackathon creates true engineers.</p>
+              </div>
+            </div>
+
+            <div class="pillar-item">
+              <div class="pillar-num">02</div>
+              <div class="pillar-body">
+                <h4 class="pillar-title">Year-1 Status is a Superpower</h4>
+                <p class="pillar-text">Starting early means compounding returns. 3+ years of intense building before graduation will make me an unstoppable world-class developer.</p>
+              </div>
+            </div>
+
+            <div class="pillar-item">
+              <div class="pillar-num">03</div>
+              <div class="pillar-body">
+                <h4 class="pillar-title">World-Class Ambition, Everyday Humility</h4>
+                <p class="pillar-text">I embrace being a beginner in complex domains because it allows me to ask fearless questions, absorb critiques, and iterate with ruthless speed.</p>
+              </div>
+            </div>
+
+            <div class="pillar-item">
+              <div class="pillar-num">04</div>
+              <div class="pillar-body">
+                <h4 class="pillar-title">AI is the Multiplier, Human Grit is the Core</h4>
+                <p class="pillar-text">Harnessing cutting-edge AI models while maintaining deep fundamental mastery over algorithms, systems, and creative design.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 06: TRANSMISSION PORTAL (CONTACT) -->
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag"><span class="tag-num">06</span> OPEN FREQUENCIES</div>
+          <h2 class="section-title">INITIALIZE TRANSMISSION</h2>
+          <p class="section-desc">
+            Looking for a driven hackathon teammate, AI/ML research collaborator, or an unstoppable intern? My frequency is open.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Contact Channels Info -->
+          <div class="contact-info-card">
+            <h3 class="contact-card-title">DIRECT CHANNELS</h3>
+            <p class="contact-card-desc">
+              Connect with Suraj Kumar across social frequencies or initiate direct communication.
+            </p>
+
+            <div class="channel-list">
+              <div class="channel-row" id="emailCopyRow">
+                <div class="channel-icon">✉️</div>
+                <div class="channel-details">
+                  <span class="channel-label">EMAIL ADDRESS</span>
+                  <span class="channel-val" id="emailVal">surajkumar.cse.aiml@gmail.com</span>
+                </div>
+                <button class="channel-action-btn" id="copyEmailBtn" title="Copy Email">COPY</button>
+              </div>
+
+              <div class="channel-row">
+                <div class="channel-icon">🐙</div>
+                <div class="channel-details">
+                  <span class="channel-label">GITHUB PROFILE</span>
+                  <span class="channel-val" id="githubVal">github.com/surajkumar-dev</span>
+                </div>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="channel-action-btn">VISIT</a>
+              </div>
+
+              <div class="channel-row">
+                <div class="channel-icon">💼</div>
+                <div class="channel-details">
+                  <span class="channel-label">LINKEDIN NETWORK</span>
+                  <span class="channel-val" id="linkedinVal">linkedin.com/in/suraj-kumar-aiml</span>
+                </div>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="channel-action-btn">CONNECT</a>
+              </div>
+
+              <div class="channel-row">
+                <div class="channel-icon">📍</div>
+                <div class="channel-details">
+                  <span class="channel-label">BASE OF OPERATIONS</span>
+                  <span class="channel-val" id="locationVal">India • Open to Global Remote Opportunities</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Current Focus Card -->
+            <div class="focus-alert">
+              <span class="alert-icon">⚡</span>
+              <div>
+                <strong>CURRENT RADAR OBJECTIVE:</strong>
+                <p>Exploring Next-Gen LLM Agents, PyTorch Neural Architectures, and preparing for upcoming national hackathons!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Message Form -->
+          <div class="contact-form-card">
+            <div class="form-header">
+              <span class="form-tag">ENCRYPTED TRANSMISSION PROTOCOL</span>
+              <span class="form-id">PORT: 8080 // SSL</span>
+            </div>
+
+            <form id="contactForm" class="cyber-form" novalidate>
+              <div class="form-group">
+                <label for="senderName" class="form-label">SENDER CALLSIGN / NAME</label>
+                <div class="input-wrap">
+                  <input type="text" id="senderName" class="form-input" placeholder="e.g. Alex Vance" required>
+                  <span class="input-glow"></span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="senderEmail" class="form-label">RETURN FREQUENCY / EMAIL</label>
+                <div class="input-wrap">
+                  <input type="email" id="senderEmail" class="form-input" placeholder="e.g. alex@quantum.org" required>
+                  <span class="input-glow"></span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="transmissionType" class="form-label">TRANSMISSION PURPOSE</label>
+                <div class="input-wrap">
+                  <select id="transmissionType" class="form-input form-select">
+                    <option value="hackathon">Hackathon Collaboration / Team Invitation</option>
+                    <option value="internship">Internship / Project Opportunity</option>
+                    <option value="aiml">AI / ML Research Discussion</option>
+                    <option value="mentorship">Mentorship & Feedback</option>
+                    <option value="general">Casual Tech Coffee / Networking</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="senderMsg" class="form-label">MESSAGE PAYLOAD</label>
+                <div class="input-wrap">
+                  <textarea id="senderMsg" class="form-input form-textarea" rows="4" placeholder="Transmit your thoughts, proposal, or feedback..." required></textarea>
+                  <span class="input-glow"></span>
+                </div>
+              </div>
+
+              <button type="submit" class="cyber-btn cyber-btn-primary form-submit-btn" id="submitBtn">
+                <span class="btn-text">TRANSMIT PACKET</span>
+                <span class="btn-icon">🚀</span>
+              </button>
+
+              <div class="form-status" id="formStatusMsg"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="cyber-footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <span class="footer-brand">⚡ SURAJ KUMAR</span>
+        <span class="footer-creed">B.Tech CSE (AI & ML) • FIRST YEAR • UNSTOPPABLE DRIVE</span>
+      </div>
+
+      <div class="footer-center">
+        <span class="footer-sys">SYSTEM STATUS: <span class="text-green">ONLINE [OPTIMAL]</span></span>
+        <span class="footer-loc">LAT 28.61, LON 77.20 // NEW DELHI, INDIA</span>
+      </div>
+
+      <div class="footer-right">
+        <a href="#hero" class="hyperjump-btn" id="backToTop" aria-label="Jump to top">
+          <span>HYPERJUMP TO TOP ↑</span>
+        </a>
+      </div>
+    </div>
+    <div class="footer-sub">
+      Designed & engineered with pure HTML5, modern CSS3, and high-performance vanilla JavaScript. Built for the relentless.
+    </div>
+  </footer>
+
+  <!-- MODAL: PROJECT SPECS VIEWER -->
+  <div class="cyber-modal" id="projectModal" aria-hidden="true">
+    <div class="modal-backdrop" onclick="closeProjectModal()"></div>
+    <div class="modal-dialog">
+      <div class="modal-bar">
+        <span class="modal-title" id="modalProjectTitle">PROJECT BLUEPRINT</span>
+        <button class="modal-close-btn" onclick="closeProjectModal()" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-content" id="modalProjectContent">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: INFO CUSTOMIZER / SYNC -->
+  <div class="cyber-modal" id="infoCustomizerModal" aria-hidden="true">
+    <div class="modal-backdrop" onclick="closeCustomizerModal()"></div>
+    <div class="modal-dialog modal-dialog-lg">
+      <div class="modal-bar">
+        <span class="modal-title">⚙️ SURAJ'S LIVE PROFILE CUSTOMIZER</span>
+        <button class="modal-close-btn" onclick="closeCustomizerModal()" aria-label="Close customizer">✕</button>
+      </div>
+      <div class="modal-content">
+        <p class="customizer-intro">
+          Want to update your real email, college name, LinkedIn/GitHub URLs, or add more details? 
+          You can edit them right here and see the entire site update instantly in real-time!
+        </p>
+        <form id="profileCustomizerForm" class="customizer-form">
+          <div class="customizer-grid">
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input type="text" id="custName" class="form-input" value="Suraj Kumar">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Degree & Year</label>
+              <input type="text" id="custDegree" class="form-input" value="1st Year B.Tech CSE (AI & ML)">
+            </div>
+            <div class="form-group">
+              <label class="form-label">College / University Name</label>
+              <input type="text" id="custCollege" class="form-input" placeholder="e.g. Indian Institute of Technology / Your College">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" id="custEmail" class="form-input" value="surajkumar.cse.aiml@gmail.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label">GitHub Username / URL</label>
+              <input type="text" id="custGithub" class="form-input" value="github.com/surajkumar-dev">
+            </div>
+            <div class="form-group">
+              <label class="form-label">LinkedIn Profile URL</label>
+              <input type="text" id="custLinkedin" class="form-input" value="linkedin.com/in/suraj-kumar-aiml">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Personal Tagline / Vision</label>
+            <input type="text" id="custTagline" class="form-input" value="An unstoppable 1st-year AI/ML developer turning impossible ideas into code.">
+          </div>
+          <div class="customizer-actions">
+            <button type="submit" class="cyber-btn cyber-btn-primary">
+              <span>APPLY CHANGES INSTANTLY</span>
+            </button>
+            <button type="button" class="cyber-btn cyber-btn-ghost" onclick="closeCustomizerModal()">
+              <span>CANCEL</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Three.js 3D WebGL Library (Offline Local Vendor) -->
+  <script src="assets/vendor/three.min.js"></script>
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>
